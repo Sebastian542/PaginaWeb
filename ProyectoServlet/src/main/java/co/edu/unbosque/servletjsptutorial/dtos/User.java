@@ -4,18 +4,21 @@ import com.opencsv.bean.CsvBindByName;
 
 public class User {
 
-    @CsvBindByName
+    @CsvBindByName(column = "username")
     private String username;
 
-    @CsvBindByName
+    @CsvBindByName(column = "password")
     private String password;
 
-    @CsvBindByName
+    @CsvBindByName(column = "role")
     private String role;
 
-    public User() {
+    public User(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
-
+    
     public String getUsername() {
         return username;
     }
