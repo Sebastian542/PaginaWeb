@@ -26,7 +26,7 @@ public class ReadCsv {
             Reader reader = Files.newBufferedReader(path);
             CsvToBean cb = new CsvToBeanBuilder(reader).withType(User.class)
                     .withMappingStrategy(ms)
-                    .withSeparator(';')
+                    .withSeparator(',')
                     .build();
 
 
@@ -47,7 +47,7 @@ public class ReadCsv {
 
         System.out.println("Reading a CSV using OpenCSV library");
 
-        List<User> result = new ReadCsv().readFromPath("resources/users.csv");
+        List<User> result = new ReadCsv().readFromPath("users.csv");
         for (User r : result) {
             System.out.println(r.toString());
         }
