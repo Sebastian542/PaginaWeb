@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Multipart Servlet Tutorial</title>
+    </head>
+    <body>
+        <form method="post" action="upload-file" enctype="multipart/form-data">
+            Name: <input type="text" name="name"/>
+            Choose a file: <input type="file" name="multiPartServlet"/>
+            <input type="submit" value="Upload"/>
+        </form>
+        <div id="images"></div>
+
+        <script>
+            var imagesDiv = document.getElementById("images");
+
+            // Making a fetch call to the servlet
+            fetch("list-files")
+                .then(response => response.json())
+                .then(images => {
+                    images.map(image => {
+                        // Creating the image element in DOM
+                        let imgElem = document.createElement("img");
+                        imgElem.src = "./" + image;
+                        imgElem.width = 200;
+
+                        // Attaching element to DIV
+                        imagesDiv.appendChild(imgElem);
+                    });
+                });
+        </script>
+        
+        
+    </body>
+</html>
