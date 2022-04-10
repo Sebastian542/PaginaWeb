@@ -43,8 +43,8 @@ public class OpenCSVWriter {
             String[] headerRecord = {"username", "titulo", "precio", "urlobra"};
             csvWriter.writeNext(headerRecord);
 
-            csvWriter.writeNext(new String[]{"Sundar Pichai ♥", "sundar.pichai@gmail.com", "+1-1111111111", "India"});
-            csvWriter.writeNext(new String[]{"Satya Nadella", "satya.nadella@outlook.com", "+1-1111111112", "India"});
+            csvWriter.writeNext(new String[]{"sada","Sundar Pichai ♥", "sundar.pichai@gmail.com", "111111111", "India"});
+           
         }
     }
 
@@ -55,16 +55,16 @@ public class OpenCSVWriter {
         try (
             Writer writer = Files.newBufferedWriter(Paths.get(STRING_ARRAY_SAMPLE));
         ) {
-            StatefulBeanToCsv<MyUser> beanToCsv = new StatefulBeanToCsvBuilder(writer)
+            StatefulBeanToCsv<CrearObra> beanToCsv = new StatefulBeanToCsvBuilder(writer)
                     .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                     .build();
 
-            List<MyUser> myUsers = new ArrayList<>();
+            List<CrearObra> myUsers = new ArrayList<>();
             
             System.out.println(Paths.get(STRING_ARRAY_SAMPLE));
-            myUsers.add(new MyUser("Sundar Pichai ♥", "sundar.pichai@gmail.com", "+1-1111111111", "India"));
-            myUsers.add(new MyUser("Satya Nadella", "satya.nadella@outlook.com", "+1-1111111112", "India"));
-            myUsers.add(new MyUser("admin wapo", "satya.nadella@outlook.com", "+1-1111111112", "India"));
+            myUsers.add(new CrearObra("sada","Sundar Pichai ♥", 1111111111, "primeraobra.jpg"));
+            
+    
 
             beanToCsv.write(myUsers);
         }
