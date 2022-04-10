@@ -6,15 +6,20 @@ import com.opencsv.bean.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
 
-    public List<User> getUsers() throws IOException {
+    public static Optional<List<User>> getUsers() throws IOException {
 
         List<User> users;
 
         try (InputStream is = UserService.class.getClassLoader()
                 .getResourceAsStream("users.csv")) {
+
+            if (is == null) {
+                return Optional.empty();
+            }
 
             HeaderColumnNameMappingStrategy<User> strategy = new HeaderColumnNameMappingStrategy<>();
             strategy.setType(User.class);
@@ -31,13 +36,22 @@ public class UserService {
             }
         }
 
-        return users;
+        return Optional.of(users);
     }
 
-    public void createUser(String username, String password, String path) throws IOException {
-        String newLine = "\n" + username + "," + password + ",customer";
-        FileOutputStream os = new FileOutputStream(path + "WEB-INF/classes/" + "users.csv", true);
-        os.write(newLine.getBytes());
-        os.close();
+    public static void main(String args[]) {
+        try {
+            Optional<List<User>> users = new UserService().getUsers();
+
+            for (User user: users.get()) {
+                System.out.println(user.toString());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
 }
+

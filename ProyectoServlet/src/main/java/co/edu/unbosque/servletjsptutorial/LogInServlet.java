@@ -16,9 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "login", value = "/login")
 public class LogInServlet extends HttpServlet {
+    private String message;
 
     public void init() {
-        //
+        message = "Hello, ";
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -27,10 +28,10 @@ public class LogInServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        List<User> users = new UserService().getUsers();
+        List<User> users = new UserService().getUsers().get();
 
         User userFounded = users.stream()
-                .filter(user -> username.equals(user.getUsername()) && password.equals(user.getPassword()))
+                .filter(user -> username.equals(user.getUsername()) && username.equals(user.getUsername()))
                 .findFirst()
                 .orElse(null);
 

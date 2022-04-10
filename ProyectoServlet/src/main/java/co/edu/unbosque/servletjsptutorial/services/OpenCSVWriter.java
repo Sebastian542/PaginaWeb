@@ -14,19 +14,20 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by rajeevkumarsingh on 25/09/17.
- */
+
 public class OpenCSVWriter {
     private static final String STRING_ARRAY_SAMPLE = "./src/main/resources/punto3.csv";
   //  private static final String OBJECT_LIST_SAMPLE = "./object-list-sample.csv";
 
-    public static void main(String[] args) throws IOException,
+    
+
+	public static void main(String[] args) throws IOException,
             CsvDataTypeMismatchException,
             CsvRequiredFieldEmptyException {
 
         writeFromArrayOfStrings();
         writeFromListOfObjects();
+        
     }
 
 
@@ -43,7 +44,7 @@ public class OpenCSVWriter {
             String[] headerRecord = {"username", "titulo", "precio", "urlobra"};
             csvWriter.writeNext(headerRecord);
 
-            csvWriter.writeNext(new String[]{"sada","Sundar Pichai ♥", "sundar.pichai@gmail.com", "111111111", "India"});
+          //  csvWriter.writeNext(new String[]{"sada","Sundar Pichai ♥", "sundar.pichai@gmail.com", "111111111", "India"});
            
         }
     }
@@ -62,6 +63,8 @@ public class OpenCSVWriter {
             List<CrearObra> myUsers = new ArrayList<>();
             
             System.out.println(Paths.get(STRING_ARRAY_SAMPLE));
+            
+            
             myUsers.add(new CrearObra("sada","Sundar Pichai ♥", 1111111111, "primeraobra.jpg"));
             
     
