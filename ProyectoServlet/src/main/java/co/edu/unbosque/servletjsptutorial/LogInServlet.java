@@ -41,12 +41,25 @@ public class LogInServlet extends HttpServlet {
             Cookie cookie = new Cookie("role", userFounded.getRole());
             cookie.setMaxAge(20);
             response.addCookie(cookie);
+            
+            System.out.println(userFounded.getRole());
+        	if(userFounded.getRole()=="artist") {
+            	
+				  RequestDispatcher dispatcher = request.getRequestDispatcher("./home.jsp");
+		           dispatcher.forward(request, response);
+		           
+          }
+        	
+        	if(userFounded.getRole()=="customer") {
+          	
+          	  RequestDispatcher dispatcher = request.getRequestDispatcher("./home2.jsp");
+                dispatcher.forward(request, response);
+          	
+          }
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("./home.jsp");
-            dispatcher.forward(request, response);
+            
 
-        } else {
-            response.sendRedirect("./401.html");
+           // response.sendRedirect("./401.html");
         }
     }
 
