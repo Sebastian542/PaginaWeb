@@ -1,8 +1,7 @@
 package co.edu.unbosque.servletjsptutorial;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import co.edu.unbosque.servletjsptutorial.dtos.User;
 import co.edu.unbosque.servletjsptutorial.services.UserService;
@@ -16,11 +15,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "login", value = "/login")
 public class LogInServlet extends HttpServlet {
-    private String message;
+	private static final long serialVersionUID = 1L;
 
-    public void init() {
-        message = "Hello, ";
-    }
+    public void init() {}
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
@@ -28,10 +25,10 @@ public class LogInServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        List<User> users = new UserService().getUsers().get();
+		List<User> users = new UserService().getUsers();
 
         User userFounded = users.stream()
-                .filter(user -> username.equals(user.getUsername()) && username.equals(user.getUsername()))
+				.filter(user -> username.equals(user.getUsername()) && password.equals(user.getPassword()))
                 .findFirst()
                 .orElse(null);
 

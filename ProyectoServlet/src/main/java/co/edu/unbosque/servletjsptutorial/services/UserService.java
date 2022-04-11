@@ -1,61 +1,46 @@
 package co.edu.unbosque.servletjsptutorial.services;
 
-import co.edu.unbosque.servletjsptutorial.dtos.User;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Optional;
+
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.bean.HeaderColumnNameMappingStrategy;
+
+import co.edu.unbosque.servletjsptutorial.dtos.User;
 
 public class UserService {
 
-    public static Optional<List<User>> getUsers() throws IOException {
+	public List<User> getUsers() throws IOException {
 
-        List<User> users;
+		List<User> users;
 
-        try (InputStream is = UserService.class.getClassLoader()
-                .getResourceAsStream("users.csv")) {
+		try (InputStream is = UserService.class.getClassLoader().getResourceAsStream("users.csv")) {
 
-            if (is == null) {
-                return Optional.empty();
-            }
+			HeaderColumnNameMappingStrategy<User> strategy = new HeaderColumnNameMappingStrategy<>();
+			strategy.setType(User.class);
 
-            HeaderColumnNameMappingStrategy<User> strategy = new HeaderColumnNameMappingStrategy<>();
-            strategy.setType(User.class);
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+				CsvToBean<User> csvToBean = new CsvToBeanBuilder<User>(br).withType(User.class)
+						.withMappingStrategy(strategy).withIgnoreLeadingWhiteSpace(true).build();
 
-                CsvToBean<User> csvToBean = new CsvToBeanBuilder<User>(br)
-                        .withType(User.class)
-                        .withMappingStrategy(strategy)
-                        .withIgnoreLeadingWhiteSpace(true)
-                        .build();
+				users = csvToBean.parse();
+			}
+		}
 
-                users = csvToBean.parse();
-            }
-        }
+		return users;
+	}
 
-        return Optional.of(users);
-    }
-
-    public static void main(String args[]) {
-        try {
-            Optional<List<User>> users = new UserService().getUsers();
-
-            for (User user: users.get()) {
-                System.out.println(user.toString());
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
+	public void createUser(String username, String password, String role, String path) throws IOException {
+		String newLine = "\n" + username + "," + password + "," + role;
+		FileOutputStream os = new FileOutputStream(path + "WEB-INF/classes/" + "users.csv", true);
+		os.write(newLine.getBytes());
+		os.close();
+	}
 }

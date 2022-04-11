@@ -4,17 +4,28 @@ import com.opencsv.bean.CsvBindByName;
 
 public class User {
 
-    @CsvBindByName(column = "username")
-    private String username;
+	@CsvBindByName(column = "username")
+	private String username;
 
-    @CsvBindByName(column = "password")
-    private String password;
+	@CsvBindByName(column = "password")
+	private String password;
 
-    @CsvBindByName(column = "role")
-    private String role;
-    
-    @CsvBindByName(column = "fcoins")
-    private String fcoins;
+	@CsvBindByName(column = "role")
+	private String role;
+
+	@CsvBindByName(column = "fcoins")
+	private float fcoins;
+
+	public User() {
+
+	}
+
+	public User(String username, String password, String role, float fcoins) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.fcoins = fcoins;
+	}
 
 	public String getUsername() {
 		return username;
@@ -40,11 +51,11 @@ public class User {
 		this.role = role;
 	}
 
-	public String getFcoins() {
+	public float getFcoins() {
 		return fcoins;
 	}
 
-	public void setFcoins(String fcoins) {
+	public void setFcoins(float fcoins) {
 		this.fcoins = fcoins;
 	}
 
@@ -53,8 +64,5 @@ public class User {
 		return "User [username=" + username + ", password=" + password + ", role=" + role + ", fcoins=" + fcoins + "]";
 	}
 
-    
-
-    
 
 }
